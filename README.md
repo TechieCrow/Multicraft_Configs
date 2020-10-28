@@ -14,3 +14,5 @@ Run server with the forge installer, this will run the forge installer jar with 
 
 
 After it's successful stop the server, change the jar to the non-installer and run the server like normal.
+
+When updating or changing jars, make sure you delete all forge files including the forge jar, minecraft_server jar and libraries directory.
