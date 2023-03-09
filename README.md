@@ -22,7 +22,7 @@ When updating or changing jars, make sure you delete all forge files including t
 
 
 # To Install Multicraft Dependences & Java 8, 17 and 18
-```sudo apt update -y && sudo apt upgrade -y && install apache2 php libapache2-mod-php php-mysql php-gd php-sqlite3 openjdk-8-jre-headless openjdk-17-jre-headless openjdk-18-jre-headless -y```
+```sudo apt update -y && sudo apt upgrade -y && sudo apt install apache2 php libapache2-mod-php php-mysql php-gd php-sqlite3 openjdk-8-jre-headless openjdk-17-jre-headless openjdk-18-jre-headless -y```
 
 ```sudo mkdir /var/www/your_domain```
 
