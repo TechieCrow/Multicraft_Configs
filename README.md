@@ -30,7 +30,7 @@ When updating or changing jars, make sure you delete all forge files including t
 
 ```sudo vim /etc/apache2/sites-available/your_domain.conf```
 
-
+``` apacheconf
     <VirtualHost *:80>
         ServerName your_domain
         ServerAlias www.your_domain
@@ -38,7 +38,10 @@ When updating or changing jars, make sure you delete all forge files including t
         DocumentRoot /var/www/your_domain
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
+        # For reverse proxy just uncomment the next line and change the redirect address and port number
+        #ProxyPass "/"  "http://your_domain.com:8080/"
     </VirtualHost>
+```
 
 
 ```sudo a2ensite your_domain```
