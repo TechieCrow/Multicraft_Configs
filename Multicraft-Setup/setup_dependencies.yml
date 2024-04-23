@@ -1,0 +1,51 @@
+---
+- name: Setup Multicraft dependencies
+  hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Update and upgrade apt packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: 'yes'
+        cache_valid_time: 3600
+
+    - name: Install necessary packages
+      ansible.builtin.apt:
+        name:
+          - htop
+          - vim
+          - apache2
+          - php
+          - libapache2-mod-php
+          - php-mysql
+          - php-gd
+          - php-sqlite3
+          - certbot
+          - python3-certbot-apache
+          - openjdk-8-jre-headless
+          - openjdk-17-jre-headless
+          - openjdk-18-jre-headless
+        state: present
+
+    - name: Pre-configure selections for phpMyAdmin
+      ansible.builtin.debconf:
+        name: phpmyadmin
+        question: "{{ item.question }}"
+        vtype: "{{ item.vtype }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { question: 'phpmyadmin/reconfigure-webserver', vtype: 'multiselect', value: 'apache2' }
+        - { question: 'phpmyadmin/dbconfig-install', vtype: 'boolean', value: 'false' }
+
+    - name: Install phpMyAdmin
+      ansible.builtin.apt:
+        name: phpmyadmin
+        state: present
+
+    - name: Ensure Apache is restarted
+      ansible.builtin.systemd:
+        name: apache2
+        state: restarted
+        enabled: yes

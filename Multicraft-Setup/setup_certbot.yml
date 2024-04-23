@@ -1,0 +1,27 @@
+---
+- name: Obtain and install SSL certificate with Certbot for Apache
+  hosts: localhost
+  become: yes
+
+  vars:
+    domain_name: "panel-domain"
+    email_address: "email"
+
+  tasks:
+    - name: Obtain an SSL certificate from Let's Encrypt for Apache
+      ansible.builtin.shell: |
+        certbot --apache --non-interactive --agree-tos --email {{ email_address }} -d {{ domain_name }}
+      args:
+        creates: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
+      register: certbot_output
+      ignore_errors: yes
+
+    - name: Debug output of Certbot
+      ansible.builtin.debug:
+        msg: "{{ certbot_output.stdout_lines }}"
+      when: certbot_output.failed
+
+    - name: Reload Apache to apply SSL configuration
+      ansible.builtin.systemd:
+        name: apache2
+        state: reloaded

@@ -1,0 +1,58 @@
+---
+- name: Configure Apache Virtual Host and modify configurations
+  hosts: localhost
+  become: yes
+  vars:
+    site_name: "website-directory"
+    document_root: "/var/www/{{ site_name }}"
+    server_admin: "email"
+
+  tasks:
+    - name: Create website directory
+      ansible.builtin.file:
+        path: "{{ document_root }}"
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: '0755'
+
+    - name: Setup Apache virtual host file
+      ansible.builtin.template:
+        src: vhost.j2
+        dest: "/etc/apache2/sites-available/{{ site_name }}.conf"
+      notify: reload apache2
+
+    - name: Enable new site
+      ansible.builtin.shell:
+        cmd: a2ensite {{ site_name }}
+      notify: reload apache2
+
+    - name: Disable default Apache site
+      ansible.builtin.shell:
+        cmd: a2dissite 000-default.conf
+      notify: reload apache2
+
+    - name: Replace dir.conf with custom configuration
+      ansible.builtin.template:
+        src: dir.conf.j2
+        dest: /etc/apache2/mods-enabled/dir.conf
+      notify: reload apache2
+
+    - name: Enable mod_rewrite
+      ansible.builtin.shell:
+        cmd: a2enmod rewrite
+      notify: reload apache2
+
+    - name: Allow .htaccess Overrides and set Directory AllowOverride
+      ansible.builtin.lineinfile:
+        path: /etc/apache2/apache2.conf
+        regexp: '^(\s*#?\s*AllowOverride\s+)None'
+        line: '\1All'
+        backrefs: yes
+      notify: reload apache2
+
+  handlers:
+    - name: reload apache2
+      ansible.builtin.systemd:
+        name: apache2
+        state: reloaded

@@ -1,0 +1,15 @@
+---
+# This is the master playbook that coordinates the setup of Multicraft and its dependencies
+- name: Setup Multicraft Main
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Setup initial requirements
+      debug:
+        msg: "Starting Multicraft setup..."
+
+# Now, import additional playbooks
+- import_playbook: setup_mysql.yml
+- import_playbook: setup_dependencies.yml
+- import_playbook: setup_vhost.yml
+- import_playbook: setup_certbot.yml
