@@ -22,46 +22,19 @@ When updating or changing jars, make sure you delete all forge files including t
 
 
 # To Install Multicraft Dependences & Java 8, 17 and 18
-```sudo apt update -y && sudo apt upgrade -y && sudo apt install apache2 php libapache2-mod-php php-mysql php-gd php-sqlite3 openjdk-8-jre-headless openjdk-17-jre-headless openjdk-18-jre-headless -y```
-
-```sudo mkdir /var/www/your_domain```
-
-```sudo chown -R $USER:$USER /var/www/your_domain```
-
-```sudo vim /etc/apache2/sites-available/your_domain.conf```
-
-``` apacheconf
-    <VirtualHost *:80>
-        ServerName your_domain
-        ServerAlias www.your_domain
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/your_domain
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-        # For reverse proxy just uncomment the next line and change the redirect address and port number
-        #ProxyPass "/"  "http://your_domain.com:8080/"
-    </VirtualHost>
-```
-
-
-```sudo a2ensite your_domain```
-
-```sudo a2dissite 000-default```
-
-```sudo apache2ctl configtest```
-
-```sudo systemctl reload apache2```
-
-```sudo vim /etc/apache2/mods-enabled/dir.conf```
-
-```sudo systemctl reload apache2```
-
-```sudo a2enmod rewrite```
-
-```sudo systemctl reload apache2```
-
-This will update and upgrade your machine then install all of multicrafts dependences as well as the java versions without any confirmation.
+I am using ansible to automate the dependences, I'm still very new to ansible so please make sure you read all the files before using them.
 
 To actually install MultiCraft itself, please look at their docs on their website.
 
-If you would like a certain jar config file please let me know.
+```Download the files in Multicraft-Setup and run the setup_multicraft.yml ansible playbook, it will install all the required dependences, setup mysql, phpmyadmin and an apache2 vhost for the panel```
+```Please change these:
+In setup_vhost.yml:
+	site_name: "website-directory"
+	server_admin: "email"
+
+In setup_mysql.yml:
+	mysql_root_password: "database-password
+	
+In setup_certbot.yml:
+	domain_name: "panel-domain"
+    email_address: "email"
