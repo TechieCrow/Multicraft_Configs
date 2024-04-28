@@ -21,7 +21,7 @@ When updating or changing jars, make sure you delete all forge files including t
 ------------
 
 
-# To Install Multicraft Dependences & Java 8, 17 and 18
+# To Install Multicraft Dependences & Java 8, 17 and 21
 I am using ansible to automate the dependences, I'm still very new to ansible so please make sure you read all the files before using them.
 
 To actually install MultiCraft itself, please look at their docs on their website.
