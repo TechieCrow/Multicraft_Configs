@@ -26,7 +26,7 @@
           - python3-certbot-apache
           - openjdk-8-jre-headless
           - openjdk-17-jre-headless
-          - openjdk-18-jre-headless
+          - openjdk-21-jre-headless
         state: present
 
     - name: Pre-configure selections for phpMyAdmin
