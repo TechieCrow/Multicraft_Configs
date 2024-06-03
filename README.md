@@ -4,6 +4,8 @@ This repository contains my personal `jar.config` files for Multicraft and Ansib
 
 ## Forge Server Configuration
 
+Note: I will not be adding or updating anymore Forge jar.conf files, they are annoying to setup, maintain and honestly a lot of the hybrid server software is good enough to run only Forge mods now, if you want an updated Forge jar.conf you can use my files as a base for your own.
+
 ### For Forge Servers:
 1. **Installer Configs**: Update the config and JAR files.
 2. **Non-installer Configs**: Update the config only.
