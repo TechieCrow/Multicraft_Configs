@@ -1,40 +1,41 @@
-# Readme
-# Forge Stuff
+# Multicraft Configuration and Setup
 
-For Forge servers:
+This repository contains my personal `jar.config` files for Multicraft and Ansible playbooks to streamline the setup process on a new server.
 
-Installer configs - Update config & jar.
+## Forge Server Configuration
 
-Non-installer configs - Update config ONLY.
+### For Forge Servers:
+1. **Installer Configs**: Update the config and JAR files.
+2. **Non-installer Configs**: Update the config only.
 
+**Steps:**
+1. In server settings, set "Look for JARs in Server base directory".
+2. Run the server with the Forge installer (`--installServer` argument).
+3. After successful installation, stop the server.
+4. Switch to the non-installer JAR and run the server normally.
 
-In the servers settings Look for JARs in Server base directory.
+**Note:** When updating or changing JARs, delete all Forge files including the Forge JAR, `minecraft_server` JAR, and the `libraries` directory.
 
+## Installing Multicraft Dependencies & Java (8, 17, 21)
 
-Run server with the forge installer, this will run the forge installer jar with the --installServer argument.
+Use Ansible to automate the installation of dependencies. Ensure you review all files before use as this is a work in progress.
 
+### Instructions:
+1. Download files in `Multicraft-Setup`.
+2. Run `setup_multicraft.yml` playbook. This will install dependencies, set up MySQL, phpMyAdmin, and an Apache2 vhost for the panel.
 
-After its successful stop the server, change the jar to the non-installer and run the server like normal.
-
-When updating or changing jars, make sure you delete all forge files including the forge jar, minecraft_server jar and libraries directory.
-
-------------
-
-
-# To Install Multicraft Dependences & Java 8, 17 and 21
-I am using ansible to automate the dependences, I'm still very new to ansible so please make sure you read all the files before using them.
-
-To actually install MultiCraft itself, please look at their docs on their website.
-
-```Download the files in Multicraft-Setup and run the setup_multicraft.yml ansible playbook, it will install all the required dependences, setup mysql, phpmyadmin and an apache2 vhost for the panel```
-```Please change these:
-In setup_vhost.yml:
-	site_name: "website-directory"
-	server_admin: "email"
-
-In setup_mysql.yml:
-	mysql_root_password: "database-password
-	
-In setup_certbot.yml:
-	domain_name: "panel-domain"
-    email_address: "email"
+### Ansible Configuration:
+- **setup_vhost.yml**:
+  ```yaml
+  site_name: "website-directory"
+  server_admin: "email"
+- **setup_mysql.yml**:
+  ```yaml
+  mysql_root_password: "database-password"
+- **setup_certbot.yml**:
+  ```yaml
+  domain_name: "panel-domain"
+  email_address: "email"
+  
+### About:
+This repository includes my custom jar.config files for Multicraft.
